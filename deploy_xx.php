@@ -29,6 +29,7 @@ $deploy_list = $mysql->select('distinct(deploy_time),deploy_info,pf_name','xedao
 					<tfoot>
 						<tr>
                             <td colspan="4" style="text-align:right">
+                                <input type="text" name="cmd" id="cmd" style="width:260px" placeholder="#/bin/bash /home/example.sh install"/>
                                 <input type="submit" style="width:80px" class="button" value="部署" name="do"/></td>
                                 <td>
                                 <input type="submit" style="width:80px" class="button" value="删除" name="do"/></td>

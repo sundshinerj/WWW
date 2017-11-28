@@ -76,7 +76,7 @@ else{
 		</p>
 	</div>
     
-    <form>
+    <form action="deploy_add.php" method="POST" id='fform'>
     <div>
         <td colspan="2"><input type="text" name="fname" id="fname" placeholder="平台名称"/></td>
         <td colspan="2"><input type="text" name="fname_ip" id="fname_ip" placeholder="10.12.12.1:90;10.12.12.2:90" style="width:200px"/></td>

@@ -28,11 +28,21 @@ if($_POST['do'] == '删除'){
         file_put_contents('deploy_ip.txt',$ip);
 	}
     //执行部署操作
-    exec('/usr/bin/python /home/controll/ams.py -c '.$control_ip[0]['control_ip'].' -e "#/bin/bash deploy.sh '.$pf_name[0]['pf_name'].'" -f /var/www/html/deploy_ip.txt',$deploy_log);
+    exec('/usr/bin/python /home/controll/ams.py -c '.$control_ip[0]['control_ip'].' -e "'.$_POST['cmd'].$pf_name[0]['pf_name'].'" -f /var/www/html/deploy_ip.txt',$deploy_log);
+    
+    //写入日志
+    for($i=0;$i<count($deploy_log);$i++){
+        $str = $deploy_log[$i];
+        $str_1 = explode("'",$str);
+        $mysql->update('hostname,deploy_info,deploy_log','deploy_info',"'".$str_1[1]."','".$_GET['pf_name']."','".$str_1[3]."'",$getid = false);
+        $set = 'deploy_log = '."'".$str_1[3]."'".'deploy_time="'.date('Y-m-d H:i:s').'"'.'deploy_user="'.$deploy_user.'"';
+        $where = 'hostname = '."'".$str_1[1]."'";
+        $mysql->update('deploy_info,deploy_time,deploy_user',$set,$where);
+    }
     //更新日志
-    $where = 'deploy_time="'.$_POST['deploy_time'].'" and pf_name="'.$pf_name[0]['pf_name'].'"';
-    $set = 'deploy_time="'.date('Y-m-d H:i:s').'",deploy_user="'.$deploy_user.'"';
-    $mysql->update('xedaojia_deployinfo',$set,$where);
+    //$where = 'deploy_time="'.$_POST['deploy_time'].'" and pf_name="'.$pf_name[0]['pf_name'].'"';
+    //$set = 'deploy_time="'.date('Y-m-d H:i:s').'",deploy_user="'.$deploy_user.'"';
+    //$mysql->update('xedaojia_deployinfo',$set,$where);
     ?>
     <script>alert("代码正在后台部署，稍后请查看相关日志！")</script>
 <?php }?>
