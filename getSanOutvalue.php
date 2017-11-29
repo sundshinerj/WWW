@@ -1,5 +1,5 @@
 <?php
-$order = 'python test.py';  
+$order = 'python getSanOutvalue.py';  
 $data = shell_exec($order);  
 echo $data;
 ?>

@@ -3,5 +3,5 @@ session_start();
 //require_once 'include/func_checkHttpref.php';
 unset($_SESSION['id']);
 unset($_SESSION['name']);
-header('Location: http://localhost/login.php');
+header('Location: login.php');
 ?>

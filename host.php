@@ -9,21 +9,21 @@ $use_type = $mysql->select('*', 'xedaojia_businessunit');
 ?>
 
 <div>
-	<div>
-		<div>
-			<p>系统管理>>资产管理</p>
-		</div>
-		<div>
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>IP</th>
-						<th>设备类型</th>
-						<th>设备位置</th>
-						<th>使用状态</th>
-						<th>操作</th>
-					</tr>
-				</thead>
+    <div>
+        <div>
+            <p>系统管理>>资产管理</p>
+        </div>
+        <div>
+	    <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>设备类型</th>
+                        <th>设备位置</th>
+                        <th>使用状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
 				<tfoot>
 					<tr>
 						<form action="host_add.php" method="post" id="adduser">

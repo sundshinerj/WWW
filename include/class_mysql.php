@@ -56,7 +56,7 @@ class mysql{
 	
 	public function insert($column, $table, $value, $getid = false){
 		$query = 'insert into '.$table.'('.$column.') value ('.$value.')';
-		var_dump($query);
+		//var_dump($query);
 		$result = $this->exec_query($query);
 		if ($result) {
 			if ($getid) {

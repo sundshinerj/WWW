@@ -1,4 +1,4 @@
-<meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
+﻿<meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
 <?php
 require_once 'include/func_checkSession.php';
 require_once 'include/func_checkHttpref.php';
@@ -7,24 +7,17 @@ require_once 'include/class_mysql.php';
 if(!$_POST['fname'] or !$_POST['fname_ip']){?>
     <script>alert("检查参数！")</script>
 <?php
+    header('refresh:0;url='.$_SERVER['HTTP_REFERER']);
 }
-//header('refresh:0;url='.$_SERVER['HTTP_REFERER']);
-print_r($_POST);
 $mysql = new mysql();
 $value = '"'.$_POST['fname'].'"';
 $mysql->insert('b_name','xedaojia_businessunit',$value);
 //$mysql->insert('hostname,s_port,business_id','xedaojia_server',$value);
 $where = 'b_name="'.$_POST['fname'].'"';
 $business_id = $mysql->select('id','xedaojia_businessunit',$where)[0]['id'];
-print_r($business_id);
 
-//$iplist = explode(';',$_POST['fname_ip']);
-//print_r($iplist);
-//print_r(explode(':',(explode(';',$iplist)[0])));
-//for($i=0;$i<count($iplist);$i++){
-//    $ip = explode(':',$iplist[$i])[0];
-//    echo $ip;
-//print_r($_POST);
+
+//多个IP
 if(strpos($_POST['fname_ip'],';') == true ){
     if(preg_match("/.;$/",$_POST['fname_ip']) == true){?>
         <script>alert("不能以;结尾")</script>
@@ -33,7 +26,7 @@ if(strpos($_POST['fname_ip'],';') == true ){
     }else {
         $iplist = explode(';',$_POST['fname_ip']);
         for($i=0;$i<count($iplist);$i++){
-            if(strpos($iplist[$i],':') == true){
+            if(strpos($iplist[$i],':') == true){ //判断是否有端口
                 $ip = explode(':',$iplist[$i])[0];
                 $s_port = explode(':',$iplist[$i])[1];
                 $value = '"'.$ip.'",'.$s_port.','.$business_id;
@@ -41,20 +34,21 @@ if(strpos($_POST['fname_ip'],';') == true ){
             }else {
                 $ip = explode(':',$iplist[$i])[0];
                 $value = '"'.$ip.'",'.$business_id;
-                $mysql->insert('hostname,business_id','xedaojia_server');
+                $mysql->insert('hostname,business_id','xedaojia_server',$value);
             }
         }
     }
-}else{
-    if(strpos($iplist[$i],':') == true){
-        $ip = explode(':',$iplist[$i])[0];
-        $s_port = explode(':',$iplist[$i])[1];
+}else{  //单个IP
+    if(strpos($_POST['fname_ip'],':') == true){
+        $ip = explode(':',$_POST['fname_ip'])[0];
+        $s_port = explode(':',$_POST['fname_ip'])[1];
         $value = '"'.$ip.'","'.$s_port.'",'.$business_id;
-        $mysql->insert('hostname,s_port,business_id','xedaojia_server');
+        $mysql->insert('hostname,s_port,business_id','xedaojia_server',$value);
     }else {
-        $ip = explode(':',$iplist[$i])[0];
+        $ip = explode(':',$_POST['fname_ip'])[0];
         $value = '"'.$ip.'",'.$business_id;
-        $mysql->insert('hostname,business_id','xedaojia_server');
+        $mysql->insert('hostname,business_id','xedaojia_server',$value);
     }
 }
+header('refresh:0;url='.$_SERVER['HTTP_REFERER']);
 ?>

@@ -44,7 +44,7 @@ session_start()?>
                 $id = $_SESSION[id];
             } else {
                 echo '<script type="text/javascript">alert("请先登录！")</script>';
-                header('Location: http://localhost/login.php');
+                header('Location: http://10.18.12.93:8090/login.php');
             }
             $where = 'id='.$id;
             $user = $mysql->select('groupid,realname', 'xedaojia_user', $where);
